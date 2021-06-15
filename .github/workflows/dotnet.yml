@@ -36,15 +36,17 @@ jobs:    # <-- this is the existing jobs line
       name: dev
       url: ${{ steps.deploywebapp.outputs.webapp-url }}
 
-steps:
+  steps:
       - name: Download a Build Artifact
-uses: actions/download-artifact@v2.0.8
-     with:
-        name: website
-        path: website
-
-     - name: Login via Azure CLI
-       uses: azure/login@v1
+  uses: actions/download-artifact@v2.0.8
+      
+      
+  with:
+      name: website
+      path: website
+      
+  -name: Login via Azure CLI
+      uses:azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
