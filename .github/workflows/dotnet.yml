@@ -5,9 +5,15 @@ on: [push]
 env:
   AZURE_WEBAPP_NAME: vycthor369-dev    # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+  
+
+  app-name: "<vycthor369-dev>"
+
+  rg-name: "<vycthor369>"
+
+jobs:    # <-- this is the existing jobs line
        
 
-jobs:
   build:
     runs-on: ubuntu-latest
 
