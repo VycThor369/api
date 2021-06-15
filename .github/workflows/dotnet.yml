@@ -28,6 +28,39 @@ jobs:    # <-- this is the existing jobs line
           dotnet build --configuration Release
           dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/api' 
           
+          if-no-files-found: error  # <-- last line of build job: insert below this line
+
+  deploy_staging:
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: dev
+      url: ${{ steps.deploywebapp.outputs.webapp-url }}
+
+    steps:
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v2.0.8
+      with:
+        name: website
+        path: website
+
+    - name: Login via Azure CLI
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Deploy web app
+      id: deploywebapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.app-name }}
+        slot-name: staging
+        package: website
+
+    - name: az cli logout
+      run: az logout
+          
   deploy-dev:
       runs-on: ubuntu-latest
       environment:
