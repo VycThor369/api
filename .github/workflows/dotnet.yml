@@ -39,12 +39,12 @@ jobs:    # <-- this is the existing jobs line
 steps:
       - name: Download a Build Artifact
 uses: actions/download-artifact@v2.0.8
-      with:
+     with:
         name: website
         path: website
 
      - name: Login via Azure CLI
-      uses: azure/login@v1
+       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
@@ -59,12 +59,7 @@ uses: actions/download-artifact@v2.0.8
     - name: az cli logout
       run: az logout
           
-      deploy-dev:
-      runs-on: ubuntu-latest
-      environment:
-        name: dev     
-      needs: build
-      steps:    
+     
       # Deploy to Azure Web apps
       - name: 'Run Azure webapp deploy action using publish profile credentials'
         uses: azure/webapps-deploy@v2
